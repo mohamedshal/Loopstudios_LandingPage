@@ -1,0 +1,466 @@
+* {
+    box-sizing: border-box;
+}
+$mainTransition: all 0.3s;
+$textColor: #fff;
+body {
+    margin: 0;
+    padding: 0;
+    font: {
+        family:"Alata", sans-serif;
+    }
+}
+// classes
+.flex {
+    display: flex;
+    justify-content: space-between;
+}
+.toggle {
+    display: flex !important;
+}
+.toggle-list {
+    right: 0% !important;
+}
+.toggle-link {
+    top: 0 !important;
+}
+.list-ul {
+    pointer-events: auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        list-style: none;
+}
+.style-li {
+    cursor: pointer;
+    transition: $mainTransition;
+    position: relative;
+    padding-top: 9px;
+}
+.link-style {
+    text-decoration: none;
+    color: $textColor;
+}
+.style-after {
+    position: absolute;
+            content: "";
+            left: 50%;
+            transform: translateX(-50%);
+            bottom: -7px;
+            width: 0%;
+            height: 2px;
+            background-color: $textColor;
+            transition: $mainTransition;
+}
+// mixins
+@mixin move($position,$top,$right:null) {
+    position: $position;
+    top: $top;
+    @if $right != null {
+        right: $right;
+    }
+}
+@mixin border($width, $style, $color) {
+    border: {
+        width: $width;
+        style: $style;
+        color: $color;
+    };
+}
+@mixin font($size,$weight:null,$family:null) {
+        font-size: $size;
+        @if $weight != null {
+            font-weight:  $weight;
+        }
+        @if $family != null {
+            font-family: $family;
+        }
+}
+@mixin flex($justify, $direction:null,$gap) {
+    display: flex;
+    justify-content: $justify;
+    @if $direction != null {
+            flex-direction:  $direction;
+    }
+    gap: $gap;
+}
+.container {
+    width: 80%;
+    margin: 20px auto;
+    padding: 20px 0;
+}
+// header
+header {
+    position: relative;
+    background-image: url(./images/image-hero.jpg);
+    background-size: cover;
+    background-position: center;
+    overflow: hidden;
+    height: 80vh;
+    .container {
+    .list {
+        @extend .flex;
+        position: relative;
+        min-height: 20vh;
+        overflow: hidden;
+        h1 {
+        user-select: none;
+        color: $textColor;
+        @include move(absolute,0);
+        margin: 0;
+        padding: 10px 2%;
+        z-index: 2;
+    }
+    }
+    img {
+        @include move(absolute,0,3%);
+        padding: 20px 2%;
+        transform: scale3d(1.1,1.1,1.1);
+        cursor: pointer;
+        display: none;
+        z-index: 3;
+        }
+        .header-title{
+            width:fit-content;
+            padding: 20px;
+            margin: 50px 0;
+            color: $textColor;
+            text-transform: uppercase;
+            border: {
+                width: 3px;
+                color: $textColor;
+                style: solid;
+            }
+        font: {
+            size:4.5rem;
+            weight:300;
+            family: "Josefin Sans", sans-serif;
+        }
+        @media(max-width:767px) {
+            width: 100%;
+            font-size: 2.6rem;
+            padding: 10px 0;
+            text-align: center;
+        }
+    }
+    }
+     .list-title {
+        pointer-events: none;
+    ul {
+        @extend .list-ul;
+        @include move(absolute,0,3%);
+        margin: 0;
+        padding: 10px 2%;
+        transition: $mainTransition;
+        li {
+            @extend .style-li;
+            a {
+                @extend .link-style;
+                font: {
+                    size: 20px;
+                    weight: 700;
+                }
+            }
+
+        &::after {
+                @extend .style-after;
+            }
+            &:hover::after {
+            width: 100%;
+            }
+        }
+    }
+    }
+}
+@media (max-width: 768px) {
+    header {
+        .container {
+            .list {
+                overflow: hidden;
+            }
+        img {
+            display: block;
+        }
+        }
+        .list-title {
+                    background-color: #000;
+                        width: 100%;
+                        height: 100%;
+                        transition: $mainTransition;
+                        @include move(absolute,50%,-110%);
+                        transform: translateY(-50%);
+                    ul {
+                        flex-direction: column;
+                        right: 83%;
+                        top: 50%;
+                        transform: translateY(-50%);
+                        gap: 30px;
+                        display: none;
+                        @media (max-width:600px) {
+                            right: 75%;
+                        }
+                        li {
+                            overflow: hidden;
+                            transition: $mainTransition;
+                            a{
+                                @include move(relative,20px);
+                                transition: $mainTransition;
+                            }
+                        }
+                    }
+                }
+    }
+}
+// about 
+.about {
+    margin: 20px 0;
+    padding: 20px 0;
+    .container {
+        position: relative;
+        display: flex;
+        @media (max-width:767px) {
+            flex-direction: column;
+            align-items: center;
+        }
+        .image {
+            width: 70%;
+            @media(max-width:767px) {
+                width: 100%;
+            }
+            img {
+                max-width: 100%;
+            }
+        }
+        .info {
+            width: 50%;
+            height: 90%;
+            padding: 40px;
+            background-color: $textColor;
+            @include move(absolute, 30%,-5% );
+            @include border(1px,solid,$textColor);
+            @media (max-width:992px) {
+                padding: 15px;
+            }
+            @media(max-width:767px) {
+                width: 100%;
+                position: relative;
+                padding: 0;
+                right: 0;
+            }
+            h3 {
+                @include font(2.5rem,300);
+                text-transform: uppercase;
+                font: {
+                    family:"Josefin Sans", sans-serif;
+                }
+                @media(max-width:992px) {
+                    @include font(2rem, 300);
+                }
+                @media (max-width:767px) {
+                    width: 100%;
+                    @include font(1.3rem, 300);
+                    text-align: center;
+                }
+            }
+            p {
+                width: 70%;
+                color: #23232399;
+                @include font(15px);
+                @media (max-width:767px) {
+                    width: 100%;
+                    text-align: center;
+                }
+            }
+        }
+    }
+}
+// creators
+.creators {
+    margin: 50px 0;
+    padding: 20px 0;
+    .container {
+        .creator-title {
+            @extend .flex;
+            align-items: center;
+            h1 {
+                @include font(2.5rem,300);
+                text-transform: uppercase;
+                font: {
+                    family: "Josefin Sans", sans-serif;
+                }
+                @media (max-width:767px) {
+                    text-align: center;
+                    width: 100%;
+                }
+            }
+            button {
+                border: none;
+                background-color: #000;
+                color: $textColor;
+                padding: 0 20px;
+                height: 60px;
+                cursor: pointer;
+                @media (max-width:767px) {
+                    display: none;
+                }
+            }
+        }
+        .creators-info {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            .box {
+                width: 250px;
+                position: relative;
+                @media (max-width:992px) {
+                    width: 48%;
+                }
+                @media (max-width:767px) {
+                    width: 100%;
+                    height: 400px;
+                }
+                .image {
+                    height: 100%;
+                    width: 100%;
+                    @media (max-width:767px) {
+                        overflow: hidden;
+                        position: relative;
+                        img {
+                            height: auto !important;
+                            object-fit: cover; /* maintains aspect ratio and fills container */
+                            position: absolute;
+                            top: 0;
+                            left: 0;
+                        }
+                    }
+                    img {
+                        height: 100%;
+                        width: 100%;
+                    }
+                }
+                h3 {
+                    width: 83%;
+                    height: 50px;
+                    text-transform: uppercase;
+                    @include move(absolute, 70%);
+                    z-index: 3;
+                    margin-left: 20px;
+                    color:$textColor;
+                    @include font(2rem,300);
+                    font: {
+                        family: "Josefin Sans", sans-serif;
+                    }
+                }
+                &::after {
+                    @include move(absolute,0 ,0 );
+                    content: "";
+                    width: 100%;
+                    height: 100%;
+                    background-color: #00000082;
+
+                }
+            }
+        }
+        .last-btn {
+            padding: 15px 30px;
+            margin: 20px 0 20px 50%;
+            cursor: pointer;
+            text-transform: uppercase;
+            background-color: #fff;
+            transform: translateX(-50%);
+            @include border(1px, solid, #000);
+            transition: $mainTransition;
+            display: none;
+            &:hover {
+                color: $textColor;
+                background-color: #000;
+            }
+            @media (max-width:767px) {
+                display: block;
+            }
+        }
+    }
+}
+// footer
+
+footer {
+    background-color: #000;
+    color: $textColor;
+    .container {
+        @extend .flex;
+        color: $textColor;
+        .links {
+            @include flex(space-around,column, 5px);
+        h2 {
+            @include font(2rem,300)
+        }
+        ul {
+            @extend .list-ul;
+            padding: 0;
+            li {
+                @extend .style-li;
+                a {
+                    @extend .link-style;
+                }
+                &::after {
+                    @extend .style-after;
+                }
+                &:hover::after {
+            width: 100%;
+            }
+            }
+        }
+        }
+        .contacts {
+            @include flex(space-around,column, 5px);
+            ul {
+                @extend .list-ul;
+                padding: 0;
+                justify-content: flex-end;
+                li {
+                    @extend .style-li;
+                    a {
+                        @extend .link-style;
+                        i {
+                            @include font(1.8rem,300 );
+                            padding-left:5px;
+                        }
+                    }
+                    &::after {
+                        @extend .style-after;
+                    }
+                    &:hover::after {
+                        width: 100%;
+                    }
+                }
+            }
+            p {
+                color: grey;
+                @include font(0.9rem,300 )
+            }
+        }
+        @media (max-width:992px) {
+            flex-direction: column;
+            align-items: center;
+            .links {
+                h2 {
+                    text-align: center;
+                }
+                ul {
+                    flex-direction: column;
+                    align-items: center;
+                }
+            }
+            .contacts {
+                ul {
+                    justify-content: center;
+                }
+            }
+        }
+    }
+}
+html, body {
+  height: 100%;
+}
