@@ -423,7 +423,7 @@ footer {
                     @extend .style-li;
                     a {
                         @extend .link-style;
-                        i {
+                        svg {
                             @include font(1.8rem,300 );
                             padding-left:5px;
                         }
